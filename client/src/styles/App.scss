@@ -1,0 +1,248 @@
+// Basic variables
+$primary-color: #667eea;
+$text-color: #495057;
+$light-gray: #f8f9fa;
+$medium-gray: #e9ecef;
+$dark-gray: #6c757d;
+$white: #ffffff;
+
+// Reset
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: $light-gray;
+  min-height: 100vh;
+  color: $text-color;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  
+  h1 {
+    font-size: 2rem;
+    color: $primary-color;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    color: $dark-gray;
+  }
+}
+
+.main-content {
+  background: $white;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.input-group {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.input-field {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid $medium-gray;
+  border-radius: 8px;
+  font-size: 1rem;
+  
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+  }
+}
+
+.check-button {
+  padding: 12px 24px;
+  background: $primary-color;
+  color: $white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+.loader {
+  text-align: center;
+  padding: 20px;
+  color: $primary-color;
+}
+
+.error {
+  background: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.result-card {
+  background: $light-gray;
+  border-radius: 8px;
+  padding: 25px;
+  border: 1px solid $medium-gray;
+}
+
+.result-header {
+  text-align: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid $medium-gray;
+}
+
+.result-ip {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.result-subtitle {
+  color: $dark-gray;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.result-item {
+  background: $white;
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid $primary-color;
+}
+
+.result-label {
+  font-size: 0.9rem;
+  color: $dark-gray;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.result-value {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+// History Panel
+.history-panel {
+  background: $white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px;
+  
+  h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: $primary-color;
+    border-bottom: 2px solid $medium-gray;
+    padding-bottom: 10px;
+  }
+  
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .history-item {
+    background: $light-gray;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid $medium-gray;
+    position: relative;
+    
+    &:hover {
+      background: lighten($primary-color, 45%);
+      
+      .history-tooltip {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+    
+    .history-main {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .history-ip {
+      font-weight: 600;
+    }
+    
+    .history-time {
+      font-size: 0.8rem;
+      color: $dark-gray;
+    }
+    
+    .history-tooltip {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: $white;
+      border: 1px solid $primary-color;
+      border-radius: 8px;
+      padding: 10px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.2s ease;
+      z-index: 10;
+      
+      .tooltip-content {
+        font-size: 0.8rem;
+        
+        .tooltip-title {
+          font-weight: 600;
+          color: $primary-color;
+          margin-bottom: 6px;
+          border-bottom: 1px solid $medium-gray;
+          padding-bottom: 4px;
+        }
+        
+        .tooltip-note {
+          font-style: italic;
+          color: $dark-gray;
+          margin-top: 6px;
+          padding-top: 4px;
+          border-top: 1px solid $medium-gray;
+        }
+      }
+    }
+  }
+}
