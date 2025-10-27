@@ -52,7 +52,7 @@ The application displays the following intelligence data:
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/NoamBenBarak/threat-intelligence-dashboard.git
 cd threat-intelligence-dashboard
 ```
 
