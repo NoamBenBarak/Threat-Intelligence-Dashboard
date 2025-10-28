@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ERROR_MESSAGES } from "../../constants/consts.js";
-import { loadFromHistory, saveToHistory } from "../../utils/localStorage.js";
+import { loadFromHistory, saveToHistory, clearHistory } from "../../utils/localStorage.js";
 import { fetchIntelligenceData } from "../../api/intelligenceApi.js";
 import { validateIP } from "../../utils/validation.js";
 
@@ -39,9 +39,11 @@ const intelligenceSlice = createSlice({
   },
   reducers: {
     clearIntelligence: (state) => {
-      console.info(`Clearing intelligence data`);
+      console.info(`Clearing all intelligence data and history`);
       state.data = null;
       state.error = null;
+      state.history = [];
+      clearHistory();
     },
   },
 

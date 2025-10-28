@@ -26,7 +26,9 @@ export const UI_TEXT = {
   CHECKING_BUTTON: 'Checking...',
   LOADING_TEXT: 'Loading intelligence data',
   NO_DATA: 'No data available',
-  N_A: 'N/A'
+  N_A: 'N/A',
+  CLEAR_BUTTON: 'Clear All',
+  CLEAR_CONFIRM: 'Are you sure you want to clear all data and history?'
 };
 
 export const VALIDATION = {

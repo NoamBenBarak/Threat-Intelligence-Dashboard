@@ -38,3 +38,12 @@ export const saveToHistory = (ip, data) => {
       console.error('Failed to save to history:', error);
     }
   };
+
+export const clearHistory = () => {
+    try {
+      localStorage.removeItem('threat-intelligence-history');
+      console.info('Cleared all search history from localStorage');
+    } catch (error) {
+      console.error('Failed to clear history:', error);
+    }
+  };

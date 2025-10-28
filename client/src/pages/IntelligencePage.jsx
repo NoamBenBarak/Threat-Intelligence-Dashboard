@@ -4,8 +4,9 @@ import { InputField } from "../components/InputField";
 import { Button } from "../components/Button";
 import { ResultCard } from "../components/ResultCard";
 import { Loader } from "../components/Loader";
-import { fetchIntelligence } from "../redux/slices/intelligenceSlice";
+import { fetchIntelligence, clearIntelligence } from "../redux/slices/intelligenceSlice";
 import HistoryPanel from "../components/HistoryPanel";
+import { UI_TEXT } from "../constants/consts.js";
 
 export const IntelligencePage = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,14 @@ export const IntelligencePage = () => {
     }
   };
 
-  const { data, loading, error } = useSelector((state) => state.intelligence);
+  const handleClear = () => {
+    if (window.confirm(UI_TEXT.CLEAR_CONFIRM)) {
+      console.info(`User confirmed clearing all data`);
+      dispatch(clearIntelligence());
+    }
+  };
+
+  const { data, loading, error, history } = useSelector((state) => state.intelligence);
 
   return (
     <div className="intelligence-page">
@@ -29,6 +37,17 @@ export const IntelligencePage = () => {
           <InputField setIp={setIp} handleCheck={handleCheck} />
           <Button handleCheck={handleCheck} disabled={loading} />
         </div>
+        {(data || history.length > 0) && (
+          <div className="clear-section">
+            <button 
+              className="clear-button" 
+              onClick={handleClear}
+              disabled={loading}
+            >
+              {UI_TEXT.CLEAR_BUTTON}
+            </button>
+          </div>
+        )}
       </div>
 
       {loading && <Loader />}
