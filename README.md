@@ -211,22 +211,6 @@ Ensure the following are set in production:
 - `PORT=5000` (or your preferred port)
 - API keys for external services
 
-## 🔧 Development
-
-### Available Scripts
-
-#### Backend (`server/`)
-
-- `npm start`: Start development server
-- `npm test`: Run tests
-- `npm test:watch`: Run tests in watch mode
-
-#### Frontend (`client/`)
-
-- `npm start`: Start development server
-- `npm build`: Build for production
-- `npm test`: Run tests
-
 ## Troubleshooting
 
 ### Common Issues
