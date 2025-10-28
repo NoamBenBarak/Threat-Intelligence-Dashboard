@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { ERROR_MESSAGES, VALIDATION } from "../../constants/consts.js";
+import { ERROR_MESSAGES } from "../../constants/consts.js";
 import { loadFromHistory, saveToHistory } from "../../utils/localStorage.js";
 import { fetchIntelligenceData } from "../../api/intelligenceApi.js";
 import { validateIP } from "../../utils/validation.js";
