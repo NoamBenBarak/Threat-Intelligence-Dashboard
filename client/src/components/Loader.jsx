@@ -1,4 +1,3 @@
-import React from "react";
 import { UI_TEXT } from "../constants/consts.js";
 
 export const Loader = () => {

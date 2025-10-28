@@ -10,18 +10,18 @@ export const getIntelligence = async (req, res) => {
   const validation = validateIp(ip);
   if (!validation.valid) {
     logger.warn(`Invalid IP address validation failed: ${validation.error}`);
-    return res.status(HTTP_STATUS.BAD_REQUEST).json({ error: validation.error });
+    return res
+      .status(HTTP_STATUS.BAD_REQUEST)
+      .json({ error: validation.error });
   }
 
-  logger.info(`IP validation passed for: ${ip}`);
-
   try {
-    logger.info(`Starting intelligence data fetch for IP: ${ip}`);
     const data = await fetchIntelligenceData(ip);
-    logger.info(`Successfully fetched intelligence data for IP: ${ip}`);
     res.status(HTTP_STATUS.OK).json(data);
   } catch (error) {
     logger.error(`Failed to fetch intelligence data for IP: ${ip}`, error);
-    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: ERROR_MESSAGES.API_FETCH_FAILED });
+    res
+      .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+      .json({ error: ERROR_MESSAGES.API_FETCH_FAILED });
   }
 };

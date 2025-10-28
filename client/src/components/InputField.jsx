@@ -3,7 +3,6 @@ import { UI_TEXT } from "../constants/consts.js";
 export const InputField = ({ setIp, handleCheck }) => {
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      console.info(`User pressed Enter key in input field`);
       handleCheck();
     }
   };

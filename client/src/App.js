@@ -1,4 +1,3 @@
-import React from "react";
 import { IntelligencePage } from "./pages/IntelligencePage";
 import "./styles/App.scss";
 

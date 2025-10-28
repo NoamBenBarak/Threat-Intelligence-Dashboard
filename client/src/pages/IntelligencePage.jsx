@@ -22,8 +22,6 @@ export const IntelligencePage = () => {
 
   const { data, loading, error } = useSelector((state) => state.intelligence);
 
-  console.info(`Component state - loading: ${loading}, error: ${error}, data: ${data ? 'present' : 'null'}`);
-
   return (
     <div className="intelligence-page">
       <div className="input-section">
@@ -34,15 +32,11 @@ export const IntelligencePage = () => {
       </div>
 
       {loading && <Loader />}
-      
-      {error && (
-        <div className="error">
-          {error}
-        </div>
-      )}
-      
+
+      {error && <div className="error">{error}</div>}
+
       {data && <ResultCard data={data} />}
-      <HistoryPanel/>
+      <HistoryPanel />
     </div>
   );
 };
