@@ -10,18 +10,6 @@ A full-stack application that allows users to input an IP address and retrieve t
 - **Caching**: Server-side caching for improved performance
 - **Error Handling**: Comprehensive error handling and validation
 
-## Data Fields
-
-The application displays the following intelligence data:
-
-- **IP Address**: The validated input IP
-- **Hostname**: DNS hostname (if available)
-- **ISP**: Internet service provider/carrier name
-- **Country**: Geolocation result (country code)
-- **Abuse Score**: AbuseIPDB confidence score (0-100)
-- **Recent Reports**: Number of abuse reports in last 90 days
-- **VPN/Proxy Detected**: Whether IP is flagged as VPN/proxy
-- **Threat Score**: Overall threat score from IPQualityScore (0-100)
 
 ## Tech Stack
 
@@ -67,14 +55,6 @@ Below are the main design and implementation decisions made during development.
 **Note**: Client-side API response caching was not implemented due to time constraints. The server-side caching provides sufficient performance benefits for this use case.
 
 **History Storage Strategy**: Implemented a hybrid approach using both Redux state and localStorage for search history. Redux provides real-time state management while localStorage ensures persistence across browser sessions. This dual approach provides immediate UI updates and data persistence, but requires keeping both stores synchronized.
-
-### **Technical Tradeoffs**
-
-**Client-side vs Server-side Validation**: Implemented IP validation on both sides. Client-side provides immediate feedback, server-side ensures security. This adds some code duplication but improves user experience and security.
-
-**Error Handling Strategy**: Used a layered approach - client-side for UX, server-side for logging and fallbacks. This provides comprehensive error coverage but requires maintaining error handling in multiple places.
-
-**API Response Structure**: Chose to aggregate data from multiple APIs into a unified format rather than returning raw responses. This simplifies frontend consumption but requires more backend processing.
 
 
 ---
