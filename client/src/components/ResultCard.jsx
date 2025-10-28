@@ -10,7 +10,7 @@ export const ResultCard = ({ data }) => {
   console.info(`ResultCard rendered with data for IP: ${data.ip}`, {
     abuseScore: data.abuseScore,
     threatScore: data.threatScore,
-    vpnDetected: data.vpnDetected});
+    vpnOrProxyDetected: data.vpnOrProxyDetected});
 
   // Helper function to format boolean values
   const formatBoolean = (value) => {
@@ -55,7 +55,7 @@ export const ResultCard = ({ data }) => {
         <div className="result-item">
           <div className="result-label">VPN/Proxy Detected</div>
           <div className="result-value">
-            {formatBoolean(data.vpnDetected)}
+            {formatBoolean(data.vpnOrProxyDetected)}
           </div>
         </div>
         

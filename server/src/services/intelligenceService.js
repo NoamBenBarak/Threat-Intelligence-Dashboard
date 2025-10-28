@@ -1,8 +1,8 @@
 import axios from "axios";
 import dotenv from "dotenv";
 import logger from "../utils/logger.js";
-import NodeCache from 'node-cache';
 import { validateApiResponse } from "../utils/validateApiResponse.js";
+import { getName } from 'country-list';
 import { 
   API_ENDPOINTS, 
   CACHE_CONFIG, 
@@ -10,40 +10,13 @@ import {
   API_HEADERS, 
   DEFAULT_VALUES 
 } from "../constants/consts.js";
+import { calculateDerivedThreatScore, getCachedData, invalidateCache, setCachedData } from "../utils/util.js";
 
 dotenv.config();
-
-// Initialize in-memory cache for API responses
-// TTL: Time to live (how long data stays in cache)
-// checkperiod: How often to check for expired entries
-const cache = new NodeCache({ 
-  stdTTL: CACHE_CONFIG.TTL,
-  checkperiod: CACHE_CONFIG.CHECK_PERIOD 
-});
 
 const ABUSEIPDB_KEY = process.env.ABUSE_IPDB_KEY;
 const IPQUALITYSCORE_KEY = process.env.IPQUALITYSCORE_KEY;
 
-
-const getCachedData = (ip) => {
-  const cached = cache.get(ip);
-  if (cached) {
-    logger.info(`Cache hit for IP: ${ip}`);
-    return cached;
-  }
-  logger.info(`Cache miss for IP: ${ip}`);
-  return null;
-};
-
-const setCachedData = (ip, data) => {
-  cache.set(ip, data);
-  logger.info(`Cached data for IP: ${ip}`);
-};
-
-const invalidateCache = (ip) => {
-  cache.del(ip);
-  logger.info(`Cache invalidated for IP: ${ip}`);
-};
 
 const fetchFromAPIs = async (ip) => {
   logger.info(`Fetching intelligence data (API) for IP: ${ip}`);
@@ -63,31 +36,38 @@ const fetchFromAPIs = async (ip) => {
     `${API_ENDPOINTS.IPQUALITYSCORE}/${IPQUALITYSCORE_KEY}/${ip}`
   );
   
-  const [abuseRes, ipqsRes] = await Promise.all([abusePromise, ipqsPromise]);
+  const [abuseIpDbResponse, ipQualityScoreResponse] = await Promise.all([abusePromise, ipqsPromise]);
 
   logger.info(`Successfully received data from both APIs for IP: ${ip}`);
 
-  const abuseData = abuseRes.data.data;
-  const ipqsData = ipqsRes.data;
+  const abuseIpDbData = abuseIpDbResponse.data.data;
+  const ipQualityScoreData = ipQualityScoreResponse.data;
 
-  validateApiResponse(abuseData, 'AbuseIPDB');
-  validateApiResponse(ipqsData, 'IPQualityScore');
+  logger.info(`abuseIpDbData: ${abuseIpDbData}`);
+  logger.info(`ipQualityScoreData: ${ipQualityScoreData}`);
+
+  validateApiResponse(abuseIpDbData, 'AbuseIPDB');
+  validateApiResponse(ipQualityScoreData, 'IPQualityScore');
+
+  const countryName = getName(ipQualityScoreData?.country_code || abuseIpDbData?.countryCode) || DEFAULT_VALUES.COUNTRY;
+
+  const threatScoreValue = calculateDerivedThreatScore(ipQualityScoreData, abuseIpDbData) ?? DEFAULT_VALUES.THREAT_SCORE;
 
   const result = {
     ip: ip,
-    hostname: ipqsData?.hostname || DEFAULT_VALUES.HOSTNAME,
-    isp: ipqsData?.isp || DEFAULT_VALUES.ISP,
-    country: ipqsData?.country_code || DEFAULT_VALUES.COUNTRY,
-    abuseScore: abuseData?.abuseConfidenceScore || DEFAULT_VALUES.ABUSE_SCORE,
-    recentReports: abuseData?.totalReports || DEFAULT_VALUES.RECENT_REPORTS,
-    vpnDetected: ipqsData?.vpn || DEFAULT_VALUES.VPN_DETECTED,
-    threatScore: ipqsData?.fraud_score || DEFAULT_VALUES.THREAT_SCORE,
+    hostname: ipQualityScoreData?.host || DEFAULT_VALUES.HOSTNAME,
+    isp: ipQualityScoreData?.ISP || abuseIpDbData?.isp|| DEFAULT_VALUES.ISP,
+    country: countryName,
+    abuseScore: abuseIpDbData?.abuseConfidenceScore || DEFAULT_VALUES.ABUSE_SCORE,
+    recentReports: abuseIpDbData?.totalReports || DEFAULT_VALUES.RECENT_REPORTS,
+    vpnOrProxyDetected: ipQualityScoreData?.vpn ||ipQualityScoreData?.proxy|| DEFAULT_VALUES.VPN_DETECTED,
+    threatScore: threatScoreValue,
   };
 
   logger.info(`Processed intelligence data for IP: ${ip}`, { 
     abuseScore: result.abuseScore, 
     threatScore: result.threatScore,
-    vpnDetected: result.vpnDetected 
+    vpnOrProxyDetected: result.vpnOrProxyDetected 
   });
 
   return result;
