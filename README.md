@@ -2,7 +2,7 @@
 
 A full-stack application that allows users to input an IP address and retrieve threat intelligence data about it. Built with React frontend and Node.js backend-for-frontend (BFF).
 
-## 🚀 Features
+## Features
 
 - **IP Intelligence Lookup**: Get comprehensive threat intelligence data for any IP address
 - **Real-time Data**: Fetch data from multiple external APIs (AbuseIPDB, IPQualityScore)
@@ -12,7 +12,7 @@ A full-stack application that allows users to input an IP address and retrieve t
 - **Error Handling**: Comprehensive error handling and validation
 - **Logging**: Structured logging for debugging and monitoring
 
-## 📊 Data Fields
+## Data Fields
 
 The application displays the following intelligence data:
 
@@ -25,9 +25,10 @@ The application displays the following intelligence data:
 - **VPN/Proxy Detected**: Whether IP is flagged as VPN/proxy
 - **Threat Score**: Overall threat score from IPQualityScore (0-100)
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
+
 - **React** with functional components and hooks
 - **Redux Toolkit** for state management
 - **SCSS** for styling
@@ -35,19 +36,20 @@ The application displays the following intelligence data:
 - **React Testing Library** for testing
 
 ### Backend
+
 - **Node.js** with Express
 - **Winston** for logging
 - **NodeCache** for server-side caching
 - **Axios** for external API calls
 - **Jest** for testing
 
-## 📋 Prerequisites
+## Prerequisites
 
 - Node.js (v14 or higher)
 - npm or yarn
 - API keys for external services (provided below)
 
-## 🔧 Installation & Setup
+## Installation & Setup
 
 ### 1. Clone the Repository
 
@@ -82,7 +84,7 @@ touch .env
 Add the following environment variables to `server/.env`:
 
 ```env
-# API Keys 
+# API Keys
 # The original API keys provided in the assignment had expired, please register for your own API keys.
 ABUSE_IPDB_KEY=your_abuseipdb_key_here
 IPQUALITYSCORE_KEY=your_ipqualityscore_key_here
@@ -94,43 +96,51 @@ PORT=5000
 ### 4. Start the Application
 
 #### Start Backend Server
+
 ```bash
 cd server
 npm start
 ```
+
 The backend will run on `http://localhost:5000`
 
 #### Start Frontend (in a new terminal)
+
 ```bash
 cd client
 npm start
 ```
+
 The frontend will run on `http://localhost:3000`
 
-## 🧪 Testing
+## Testing
 
 ### Backend Tests
+
 ```bash
 cd server
 npm test
 ```
 
 ### Frontend Tests
+
 ```bash
 cd client
 npm test
 ```
 
-## 🔌 API Endpoint
+## API Endpoint
 
 ### GET /api/intel?ip={ip_address}
 
 Fetches threat intelligence data for the specified IP address.
 
 **Parameters:**
+
 - `ip` (query string): Valid IPv4 address
 
 **Response:**
+
 ```json
 {
   "ip": "8.8.8.8",
@@ -145,10 +155,11 @@ Fetches threat intelligence data for the specified IP address.
 ```
 
 **Error Responses:**
+
 - `400`: Invalid IP address format
 - `500`: Server error or API failure
 
-## 🔒 IP Validation
+## IP Validation
 
 The application validates IP addresses on both client and server sides:
 
@@ -157,28 +168,29 @@ The application validates IP addresses on both client and server sides:
 - **Localhost**: Not allowed (127.0.0.1)
 - **Special IPs**: Not allowed (0.0.0.0, 255.255.255.255)
 
-## 💾 Caching
+## Caching
 
 - **Server-side**: NodeCache with 1-hour TTL for API responses
 - **Client-side**: localStorage for search history persistence (10 entries max)
 
 **Note**: Client-side API response caching was not implemented due to time constraints. The server-side caching provides sufficient performance benefits for this use case.
 
-## 📝 Logging
+## Logging
 
 - **Backend**: Winston logger with console and file output
 - **Frontend**: Console logging for debugging
 - **Log Levels**: info, warn, error
 
-## 🎨 Styling
+## Styling
 
 The application uses SCSS with:
+
 - CSS variables for consistent theming
 - Responsive design
 - Modern UI components
 - Clean, minimal styling
 
-## 🚀 Deployment
+## Deployment
 
 ### Production Build
 
@@ -195,6 +207,7 @@ npm start
 ### Environment Variables for Production
 
 Ensure the following are set in production:
+
 - `PORT=5000` (or your preferred port)
 - API keys for external services
 
@@ -203,16 +216,18 @@ Ensure the following are set in production:
 ### Available Scripts
 
 #### Backend (`server/`)
+
 - `npm start`: Start development server
 - `npm test`: Run tests
 - `npm test:watch`: Run tests in watch mode
 
 #### Frontend (`client/`)
+
 - `npm start`: Start development server
 - `npm build`: Build for production
 - `npm test`: Run tests
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -225,7 +240,7 @@ Ensure the following are set in production:
 
 The application uses Winston logger with `info` level logging by default. All API calls, cache operations, and errors are logged to console and files.
 
-## 💭 Development Approach & Tradeoffs
+## Development Approach & Tradeoffs
 
 ### **Architecture Decisions**
 
@@ -268,6 +283,5 @@ The application uses Winston logger with `info` level logging by default. All AP
 **Error Messages**: Used generic error messages for users while logging detailed errors server-side. This prevents information leakage but maintains debugging capability.
 
 ---
-
 
 **Note**: The original API keys provided in the assignment had expired, so new keys were configured for testing purposes. For production use, please register for your own API keys.
