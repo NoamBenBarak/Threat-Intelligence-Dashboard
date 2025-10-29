@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import intelligenceRoutes from "./routes/intelligence.js";
+import intelligenceRoutes from "./src/routes/intelligence.js";
 
 const app = express();
 
